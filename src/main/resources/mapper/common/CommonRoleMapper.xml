@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.common.CommonRoleMapper">
+
+    <select id="findRoleList" resultType="com.example.demo.config.CamelCaseMap">
+        /* com.example.demo.mapper.common.CommonRoleMapper.findRoleList */
+        SELECT ROLE_ID
+             , ROLE_NAME
+             , ROLE_DESC
+          FROM ROLE
+    </select>
+
+</mapper>

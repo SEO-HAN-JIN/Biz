@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="layout/header::header_layout"></head>
+
+<body id="page-top">
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul th:replace="layout/sidebar::sidebar_layout"></ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav th:replace="layout/top::top_layout"></nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+                        For more information about DataTables, please visit the <a target="_blank"
+                                                                                   href="https://datatables.net">official DataTables documentation</a>.</p>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                        </div>
+                        <div class="card-body">
+                            <div id="gridDiv"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer th:replace="layout/footer::footer_layout"></footer>
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            const createGrid = initGrid();
+
+            const sampleData = [
+                {
+                    date: '2022-12-04',
+                },
+                {
+                    date: '2022-12-07',
+                }
+            ];
+
+            createGrid.resetData(sampleData);
+        });
+
+        const initGrid = () => {
+            const Grid = tui.Grid;
+
+            const grid = new Grid({
+                el: document.getElementById('gridDiv'),
+                columns: [
+                    {
+                        header: '날짜',
+                        name: 'date',
+                        align: 'center',
+                        width: 150,
+                        whiteSpace: 'normal',
+                        formatter: function(e) {
+                            return e.value
+                        }
+                    }
+                ]
+            });
+
+            return grid;
+        }
+    </script>
+
+</body>
+
+</html>

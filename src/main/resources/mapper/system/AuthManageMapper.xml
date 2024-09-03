@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.system.AuthManageMapper">
+
+    <select id="findUserList" resultType="com.example.demo.dto.system.AuthManageDto">
+    /* com.example.demo.mapper.system.AuthManageMapper.findUserList */
+        SELECT USER_ID
+             , AGENCY
+          FROM ACCOUNT      AC
+    </select>
+
+    <update id="updateUserList">
+        /* com.example.demo.mapper.system.AuthManageMapper.updateUserList */
+        UPDATE ACCOUNT
+        SET AGENCY      = #{agency}
+        WHERE USER_ID   = #{userId}
+    </update>
+
+    <select id="findRoleList" resultType="com.example.demo.config.CamelCaseMap">
+        /* com.example.demo.mapper.system.AuthManageMapper.findRoleList */
+        SELECT ROLE_ID
+             , ROLE_NAME
+             , ROLE_DESC
+        FROM ROLE      R
+    </select>
+
+    <insert id="saveRole">
+        /* com.example.demo.mapper.system.AuthManageMapper.saveRole */
+        INSERT INTO ROLE
+            ( ROLE_NAME
+            , ROLE_DESC
+            )
+        VALUES (
+            #{roleName}
+          , #{roleDesc}
+            )
+    </insert>
+
+    <update id="updateRole">
+        /* com.example.demo.mapper.system.AuthManageMapper.updateRole */
+        UPDATE ROLE
+        SET ROLE_NAME   = #{roleName}
+          , ROLE_DESC	= #{roleDesc}
+        WHERE ROLE_ID   = #{roleId}
+    </update>
+
+    <delete id="deleteRole">
+        /* com.example.demo.mapper.system.AuthManageMapper.deleteRole */
+        DELETE FROM ROLE
+         WHERE ROLE_ID  = #{roleId}
+    </delete>
+
+    <select id="findResourceList" resultType="com.example.demo.config.CamelCaseMap">
+        /* com.example.demo.mapper.system.AuthManageMapper.findResourceList */
+        SELECT R.RESOURCES_ID
+             , R.RESOURCES_NAME
+             , R.RESOURCES_ORDER_NUM
+             , RL.ROLE_ID
+          FROM RESOURCES                R
+          LEFT JOIN ROLE_RESOURCES      RL
+            ON R.RESOURCES_ID           = RL.RESOURCES_ID
+         WHERE 1=1
+         ORDER BY RESOURCES_ORDER_NUM
+    </select>
+
+    <insert id="saveResources">
+        /* com.example.demo.mapper.system.AuthManageMapper.saveResources */
+        INSERT INTO RESOURCES
+        (
+            RESOURCES_NAME
+          , RESOURCES_ORDER_NUM
+        )
+        VALUES (
+            #{resourcesName}
+          , #{resourcesOrderNum}
+        )
+    </insert>
+
+    <select id="getResourceLastInsertId" resultType="int">
+        /* com.example.demo.mapper.system.AuthManageMapper.getResourceLastInsertId */
+        SELECT LAST_INSERT_ID();
+    </select>
+
+    <insert id="saveRoleResource">
+        /* com.example.demo.mapper.system.AuthManageMapper.saveRoleResource */
+        INSERT INTO ROLE_RESOURCES
+        (
+            ROLE_ID
+            , RESOURCES_ID
+        )
+        VALUES (
+            #{roleId}
+            , #{resourcesId}
+        )
+    </insert>
+
+    <update id="updateResources">
+        /* com.example.demo.mapper.system.AuthManageMapper.updateResources */
+        UPDATE RESOURCES
+           SET RESOURCES_NAME       = #{resourcesName}
+             , RESOURCES_ORDER_NUM  = #{resourcesOrderNum}
+        WHERE RESOURCES_ID          = #{resourcesId}
+    </update>
+
+    <delete id="deleteResources">
+        /* com.example.demo.mapper.system.AuthManageMapper.deleteResources */
+        DELETE FROM RESOURCES
+         WHERE RESOURCES_ID         = #{resourcesId}
+    </delete>
+</mapper>
